@@ -5,6 +5,6 @@
   "username": "root",
   "password": "secret",
   "database": "devref-ts-express-rest-pg-auth",
-  "entities": ["./src/data-layer/models/*.ts"],
-  "migrations": ["./src/data-layer/migrations/*.ts"]
+  "entities": ["./src/data/models/*.ts"],
+  "migrations": ["./migrations/*.js"]
 }
