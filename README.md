@@ -67,3 +67,9 @@ npm run dev
 **Docker-Compose :**
 
 it make it easier for use in dev
+
+---
+
+Continues integration like jenkins/travis and .. build js app for production + docker images and ...
+jenkins push it to private docker repository
+test dev server or pull image from repository .

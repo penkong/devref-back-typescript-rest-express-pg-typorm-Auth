@@ -38,8 +38,8 @@ createConnection({
   port: 5432,
   username: 'root',
   password: 'secret',
-  // synchronize: !__prod__,
-  // logging: !__prod__,
+  synchronize: true, //!__prod__,
+  logging: true, //!__prod__,
   database: 'devref-ts-express-rest-pg-auth',
   entities: ['./src/data/models/*.ts'],
   migrations: ['./src/data-layer/migrations/*.ts']
