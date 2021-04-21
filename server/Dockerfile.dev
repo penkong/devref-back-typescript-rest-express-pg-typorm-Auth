@@ -1,0 +1,14 @@
+FROM node:15 as base 
+
+EXPOSE 5002
+
+ENV NODE_ENV=development
+
+WORKDIR "/app"
+
+COPY ./package.json ./
+
+RUN npm install
+
+COPY . .
+CMD ["npm", "run", "dev"]
