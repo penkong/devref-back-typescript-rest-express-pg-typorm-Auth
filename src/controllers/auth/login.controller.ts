@@ -3,12 +3,13 @@
  */
 
 import jwt from 'jsonwebtoken'
+
 import { Request, Response, NextFunction } from 'express'
 
-import { HashPassword } from '../../service/'
-import { BadRequestError } from '../../error/'
-import { UserRepository } from '../../data-layer/'
-import { catchAsync, userRefine } from '../../utils'
+import { BadReqErr } from '../../error/'
+import { UserRepository } from '../../data/'
+import { PasswordService } from '../../services'
+import { catchAsync, userRefine } from '../../util'
 
 // ---
 
@@ -20,11 +21,14 @@ export const login = catchAsync(
 
     const existUser = await UserRepository.getByEmail(email)
 
-    if (!existUser) throw new BadRequestError('Invalid credentials')
+    if (!existUser) throw new BadReqErr('Invalid credentials')
 
-    const matchedPass = await HashPassword.compare(existUser.password, password)
+    const matchedPass = await PasswordService.compare(
+      existUser.password,
+      password
+    )
 
-    if (!matchedPass) throw new BadRequestError('Invalid Credentials')
+    if (!matchedPass) throw new BadReqErr('Invalid Credentials')
 
     // Generate JWT
     const userJwt = jwt.sign(

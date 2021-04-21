@@ -2,8 +2,9 @@
  ** Description :
  */
 
+import 'reflect-metadata'
 import dotenv from 'dotenv'
-dotenv.config({ path: './config' })
+dotenv.config({ path: './config/index.ts' })
 
 import { Server } from 'http'
 import { createConnection } from 'typeorm'
@@ -13,39 +14,42 @@ import { app } from './app'
 
 // ---
 
-const { DB_URL, JWT_KEY, PORT } = config
+const { DB_URL, JWT_KEY, PORT, __prod__ } = config
 
 // ---
-
-let server: Server
-
-async function bootstraper() {
-  //
-
-  if (!JWT_KEY) throw new Error('jwt key must be defined!')
-
-  if (!DB_URL) throw new Error('database url must be defined!')
-
-  try {
-    // DB connection
-    await createConnection()
-
-    server = app.listen(PORT, () => {
-      console.log(`Listening on ${PORT}`)
-    })
-  } catch (err) {
-    console.log(err)
-    process.exit(1)
-  }
-}
-
-bootstraper()
 
 process.on('uncaughtException', err => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...')
   console.log(err.name, err.message)
   process.exit(1)
 })
+
+let server: Server
+
+// const bootstraper = async () => {
+
+if (!JWT_KEY) throw new Error('jwt key must be defined!')
+
+if (!DB_URL) throw new Error('database url must be defined!')
+
+createConnection({
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'root',
+  password: 'secret',
+  synchronize: !__prod__,
+  logging: !__prod__,
+  database: 'devref-ts-express-rest-pg-auth',
+  entities: ['./src/data/models/*.ts'],
+  migrations: ['./src/data-layer/migrations/*.ts']
+})
+  .then(() => {
+    server = app.listen(PORT, () => {
+      console.log(`Listening on ${PORT}!`)
+    })
+  })
+  .catch(err => console.log(err))
 
 process.on('unhandledRejection', err => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...')
@@ -58,6 +62,13 @@ process.on('unhandledRejection', err => {
 process.on('SIGTERM', () => {
   console.log('👋 SIGTERM RECEIVED. Shutting down gracefully')
   server.close(() => {
-    console.log('💥 Process terminated!')
+    console.log('process terminated')
+  })
+})
+
+process.on('SIGINT', () => {
+  console.log('👋 SIGINT RECEIVED. Shutting down gracefully')
+  server.close(() => {
+    process.exit(1)
   })
 })

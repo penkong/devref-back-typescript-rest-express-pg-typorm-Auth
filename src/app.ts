@@ -8,7 +8,7 @@ import express from 'express'
 import cookieSession from 'cookie-session'
 import compression from 'compression'
 
-import { json } from 'body-parser'
+import { json, urlencoded } from 'body-parser'
 
 // ---
 
@@ -31,38 +31,40 @@ app.use(
     credentials: true
   })
 )
+app.use(helmet())
+
+if (!__prod__) app.use(morgan('dev'))
+
+app.use('/api/*', limiter)
 
 app.use(json({ limit: '2kb' }))
-app.use(express.urlencoded({ extended: true, limit: '2kb' }))
+app.use(urlencoded({ extended: true, limit: '2kb' }))
 
-app.use(helmet())
-app.use(
-  hpp({
-    whitelist: []
-  })
-)
 app.use(
   cookieSession({
     name: 'session',
     sameSite: 'none',
     signed: false,
-    secure: process.env.NODE_ENV !== 'test'
+    secure: !__prod__
   })
 )
 
-if (!__prod__) app.use(morgan('dev'))
+app.use(
+  hpp({
+    whitelist: []
+  })
+)
 
 app.use(compression())
 
 // Busines -----
 
-app.use('/api/*', limiter)
-
 app.all('*', currentUser)
 app.use('/api/v1/auth', authRouter)
 
-app.all('*', async (_req, _res) => {
-  throw new NotFoundErr()
+app.all('*', async (_req, _res, next) => {
+  // throw new NotFoundErr()
+  next(new NotFoundErr())
 })
 
 // end -----

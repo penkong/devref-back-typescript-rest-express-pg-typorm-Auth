@@ -4,6 +4,7 @@
   "description": "the devref.ir boilerplate project for user Authentication with express typescript postgresql typeorm",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf node_modules package-lock.json dist/ out/",
     "test": "jest --watchAll --no-cache",
     "migrate": "node-pg-migrate",
     "migrateup": "DATABASE_URL=postgres://root:secret@localhost:5432/devref-ts-express-rest-pg-auth npm run migrate up",
@@ -36,7 +37,8 @@
     "@types/node": "^14.14.41",
     "concurrently": "^6.0.2",
     "express-rate-limit": "^5.2.6",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   },
   "dependencies": {
@@ -54,6 +56,7 @@
     "morgan": "^1.10.0",
     "node-pg-migrate": "^5.9.0",
     "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.32"
   },
   "jest": {

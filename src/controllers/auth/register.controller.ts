@@ -6,10 +6,10 @@ import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 
 import { config } from '../../config/'
-import { HashPassword } from '../../service/'
-import { BadRequestError } from '../../error'
-import { UserRepository } from '../../data-layer/'
-import { catchAsync, userRefine } from '../../utils'
+import { BadReqErr } from '../../error'
+import { UserRepository } from '../../data'
+import { PasswordService } from '../../services'
+import { catchAsync, userRefine } from '../../util'
 
 // ---
 
@@ -26,10 +26,10 @@ export const register = catchAsync(
     const existingUser = await UserRepository.getByEmail(email)
 
     if (existingUser) {
-      throw new BadRequestError('Email in use')
+      throw new BadReqErr('Email in use')
     }
 
-    const hashed = await HashPassword.toHash(password)
+    const hashed = await PasswordService.toHash(password)
 
     const user = await UserRepository.create({ email, password: hashed })
 
