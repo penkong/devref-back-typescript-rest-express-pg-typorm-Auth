@@ -8,4 +8,13 @@ pgadmin:
 
 # step 3
 createdb: 
-	docker exec -it pg13 createdb --username=root --owner=root anycountries
+	docker exec -it pg13 createdb --username=root --owner=root devref-ts-express-rest-pg-auth
+
+
+# step 4 - create migration modules already installed
+migratetables:
+	npm run migrate create table userinfo && npm run migrate create table creds && npm run migrate create table users
+	
+# step 5 - migrate up add creation for postgres - typeorm sync disabled
+migrateup:
+	npm run migrateup
