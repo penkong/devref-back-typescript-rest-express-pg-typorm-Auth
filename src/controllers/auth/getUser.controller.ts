@@ -4,7 +4,7 @@
 
 import { Request, Response, NextFunction } from 'express'
 
-import { catchAsync } from '../../utils'
+import { catchAsync } from '../../util'
 
 // ---
 

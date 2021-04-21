@@ -1,4 +1,4 @@
-export * from './currentUser.controller'
+export * from './getUser.controller'
 // export * from './forgetPassword.controller'
 export * from './login.controller'
 export * from './logout.controller'
