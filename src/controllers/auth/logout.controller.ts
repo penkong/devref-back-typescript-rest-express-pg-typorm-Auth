@@ -13,12 +13,7 @@ export const logout = catchAsync(
     //
 
     req.currentUser = {}
-    req.session = null
-
-    console.log(req.currentUser)
-
-    console.log(req.session)
-
+    req.session!.jwt = null
     res.send({})
   }
 )

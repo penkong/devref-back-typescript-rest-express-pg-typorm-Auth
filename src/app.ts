@@ -16,7 +16,7 @@ import { limiter } from './util'
 import { config } from './config'
 import { authRouter } from './routes'
 import { NotFoundErr } from './error'
-import { currentUser, errorHandler } from './middleware'
+import { errorHandler } from './middleware'
 
 // ---
 
@@ -45,7 +45,7 @@ app.use(
     name: 'session',
     sameSite: 'none',
     signed: false,
-    secure: !__prod__
+    secure: false
   })
 )
 
@@ -59,7 +59,6 @@ app.use(compression())
 
 // Busines -----
 
-app.all('*', currentUser)
 app.use('/api/v1/auth', authRouter)
 
 app.all('*', async (_req, _res, next) => {
