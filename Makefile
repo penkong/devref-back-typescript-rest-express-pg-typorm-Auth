@@ -18,7 +18,7 @@ pgadmin:
 
 # step 3
 createdb: 
-	docker exec -it pg13 createdb --username=root --owner=root devref-ts-express-rest-pg-auth
+	docker exec -it pg13 createdb --username=root --owner=root devref-ts-express-rest-pg-auth 
 
 # step 4.A
 apibuilddev:
@@ -32,7 +32,7 @@ apicleanup:
 
 # step 4.B
 composeup:
-	docker-compose -f docker-compose.dev.yaml up -d
+	docker-compose -f docker-compose.dev.yaml up -d --build
 
 composedown:
 	docker-compose -f docker-compose.dev.yaml down

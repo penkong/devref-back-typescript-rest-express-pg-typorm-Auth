@@ -25,10 +25,12 @@ ENV NODE_ENV=production
 # ENV PORT=5002
 # ENV DB=postgres
 # ENV PASSWORD=secret
-# ENV DB_URL=postgresql://root:<PASSWORD>@172.18.0.2:5432/devref-ts-express-rest-pg-auth?sslmode=disable
+# ENV DB_URL=postgresql://root:<PASSWORD>@172.18.0.2:5432/devrefauth?sslmode=disable
 # ENV CORS=http://localhost:3000
 # ENV JWT_KEY=yhgewy5ehuyrhbe56y65465hyy547u456t34y57uy45ytewth654uy45wy
 # ENV JWT_TTL=365d
+
+
 
 USER node
 
