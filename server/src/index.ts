@@ -8,9 +8,13 @@ dotenv.config({ path: './config/index.ts' })
 
 // import { Server } from 'http'
 import { createConnection } from 'typeorm'
+
 //
-import { config } from './config'
+
 import { app } from './app'
+
+import { config } from './config'
+import { TYPEORM } from './config/connection.config'
 
 // ---
 
@@ -32,18 +36,7 @@ if (!JWT_KEY) throw new Error('jwt key must be defined!')
 
 if (!DB_URL) throw new Error('database url must be defined!')
 
-createConnection({
-  type: 'postgres',
-  host: '172.18.0.2',
-  port: 5432,
-  username: 'root',
-  password: 'secret',
-  synchronize: true, //!__prod__,
-  logging: true, //!__prod__,
-  database: 'devref-ts-express-rest-pg-auth',
-  entities: ['./src/data/models/*.ts'],
-  migrations: ['./src/data-layer/migrations/*.ts']
-})
+createConnection(TYPEORM)
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Listening on ${PORT}!!!!`)

@@ -1,6 +1,6 @@
 {
-  "name": "devref-back-typescript-rest-express-pg-typorm-Auth",
-  "version": "1.0.0",
+  "name": "penkong/evref-back-typescript-rest-express-pg-typeorm-auth",
+  "version": "0.0.2",
   "description": "the devref.ir boilerplate project for user Authentication with express typescript postgresql typeorm",
   "main": "index.js",
   "scripts": {

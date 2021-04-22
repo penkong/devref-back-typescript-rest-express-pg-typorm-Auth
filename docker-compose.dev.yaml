@@ -1,0 +1,65 @@
+version: '3.4'
+services:
+
+  #
+  pg:
+    # image: 'postgres:13.2-alpine'
+    build: 
+      context: ./db
+      dockerfile: Dockerfile.dev
+    stdin_open: true
+    restart: always
+    volumes: 
+      - pgvol:/var/lib/postgresql/data 
+    environment:
+      # - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - PGPORT=5432
+    ports: 
+      - 5432:5432
+
+  #
+  pgadmin:
+    image: 'dpage/pgadmin4'
+    stdin_open: true
+    restart: always
+    depends_on:
+      - pg
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=nazemi.works@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=secret
+    ports: 
+      - 80:80
+
+
+  #
+  api:
+    # image: 'penkong/devref-back-typescript-rest-express-pg-typeorm-auth'
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
+    restart: always
+    stdin_open: true
+    depends_on:
+      - pg
+    volumes: 
+      - ./server/node_modules:/app/node_modules 
+      - ./server/src:/app/src
+    environment:
+      - DB=postgres
+      - DBNAME=devref-ts-express-rest-pg-auth
+      - DB_DOCKER=pg
+      - PGUSER=root
+      - PASSWORD=secret
+      - DB_URL=
+      - PORT=5002
+      - CORS=http://localhost:3000
+      - JWT_KEY=yhgewy5ehuyrhbe56y65465hyy547u456t34y57uy45ytewth654uy45wy
+      - JWT_TTL=365d
+    ports: 
+      - 5002:5002
+
+volumes: 
+  pgvol:
+    driver: local

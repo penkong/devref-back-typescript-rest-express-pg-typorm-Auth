@@ -25,17 +25,17 @@ apibuilddev:
 	cd server && docker build -t apidev-image-authpg -f Dockerfile.dev . 
 
 apirundev:
-	docker run -d -p 5002:5002 --name authpg --network pg-net -v `pwd`/server/node_modules:/node_modules -v `pwd`/server/src:/src apidev-image-authpg
+	docker run -d -p 5002:5002 --name authpg --network pg-net -v `pwd`/server/node_modules:/app/node_modules -v `pwd`/server/src:/app/src apidev-image-authpg
 
 apicleanup:
 	docker stop authpg && docker rm authpg && docker rmi apidev-image-authpg
 
 # step 4.B
 composeup:
-	docker-composeup -f docker-compose.yml up
+	docker-compose -f docker-compose.dev.yaml up -d
 
 composedown:
-	docker-composeup down
+	docker-compose -f docker-compose.dev.yaml down
 
 # step 5 - create migration modules already installed
 migratetables:
@@ -45,5 +45,12 @@ migratetables:
 migrateup:
 	npm run migrateup
 
+
+buildprodimage:
+	cd server && docker build -t penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.2 .
+
+#  need login to docker hub in terminal before this step
+pushimage:
+	docker push penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.2
 
 # docker exec -it mysql mysql -uroot -psecret <name of db>

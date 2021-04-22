@@ -1,29 +1,35 @@
 FROM node:15.13.0-alpine as base
 
-USER node
-EXPOSE 5002
 
-WORKDIR "/"
+RUN mkdir -p /app
+WORKDIR "/app"
 
-COPY ./package.json ./
+COPY package*.json ./
 
-RUN npm install
+RUN npm config set unsafe-perm true
+# we use npm ci here so only the package-lock.json file is used
+RUN npm config list \
+    && npm ci \
+    && npm cache clean --force
 
 COPY . .
 
 
 
-FROM base as devserver
+FROM base as builder
 
-ENV NODE_ENV=development
-ENV PORT=5002
-ENV DB=postgres
-ENV PASSWORD=secret
-ENV DB_URL=postgresql://root:<PASSWORD>@172.18.0.2:5432/devref-ts-express-rest-pg-auth?sslmode=disable
-ENV CORS=http://localhost:3000
-ENV JWT_KEY=yhgewy5ehuyrhbe56y65465hyy547u456t34y57uy45ytewth654uy45wy
-ENV JWT_TTL=365d
+EXPOSE 5002
 
+ENV NODE_ENV=production
 
+# ENV PORT=5002
+# ENV DB=postgres
+# ENV PASSWORD=secret
+# ENV DB_URL=postgresql://root:<PASSWORD>@172.18.0.2:5432/devref-ts-express-rest-pg-auth?sslmode=disable
+# ENV CORS=http://localhost:3000
+# ENV JWT_KEY=yhgewy5ehuyrhbe56y65465hyy547u456t34y57uy45ytewth654uy45wy
+# ENV JWT_TTL=365d
 
-CMD ["npm", "run", "dev"]
+USER node
+
+CMD ["npm", "run", "build"]
