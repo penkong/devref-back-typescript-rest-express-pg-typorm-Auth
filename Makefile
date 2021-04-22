@@ -22,14 +22,22 @@ createdb:
 
 # step 4.A
 apibuilddev:
-	cd server && docker build -t apidev-image-pgauth -f Dockerfile.dev . 
+	cd server && docker build -t apidev-image-authpg -f Dockerfile.dev . 
 
 apirundev:
-	docker run -d -p 5002:5002 --name pgauth --network pg-net -v `pwd`/server/node_modules:/node_modules -v `pwd`/server/src:/src apidev-image-pgauth
+	docker run -d -p 5002:5002 --name authpg --network pg-net -v `pwd`/server/node_modules:/node_modules -v `pwd`/server/src:/src apidev-image-authpg
 
 apicleanup:
-	docker stop pgauth && docker rm pgauth && docker rmi apidev-image-pgauth
-# step 4 - create migration modules already installed
+	docker stop authpg && docker rm authpg && docker rmi apidev-image-authpg
+
+# step 4.B
+composeup:
+	docker-composeup -f docker-compose.yml up
+
+composedown:
+	docker-composeup down
+
+# step 5 - create migration modules already installed
 migratetables:
 	npm run migrate create table userinfo && npm run migrate create table creds && npm run migrate create table users
 	
