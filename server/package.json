@@ -10,7 +10,7 @@
     "migrateup": "DATABASE_URL=postgres://root:secret@localhost:5432/devref-ts-express-rest-pg-auth npm run migrate up",
     "watch": "tsc -w",
     "dev": "nodemon --exec ts-node src/index.ts",
-    "dev:tsc": "concurrently \"npm run watch\" \"node dist/index.js\"",
+    "dev2": "concurrently \"npm run watch\" \"node dist/index.js\"",
     "build": "tsc",
     "start": "concurrently \"npm run build\" && node dist/index.js"
   },

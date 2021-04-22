@@ -57,3 +57,8 @@ CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main
 
 
 # # docker run --name pg-docker -e PGDATA=/tmp -d -p 5433:5432 -v ${PWD}:/var/lib/postgresql/data postgresbasic
+
+
+# Add VOLUMEs to allow backup of config, logs and databases
+# https://stackoverflow.com/questions/41935435/understanding-volume-instruction-in-dockerfile
+# VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]

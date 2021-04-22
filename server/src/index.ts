@@ -34,7 +34,7 @@ if (!DB_URL) throw new Error('database url must be defined!')
 
 createConnection({
   type: 'postgres',
-  host: 'localhost',
+  host: '172.18.0.2',
   port: 5432,
   username: 'root',
   password: 'secret',
