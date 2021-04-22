@@ -1,7 +1,12 @@
-# step 1
+# step 1 : create internal network for whole app
 dockerNetwork:
 	docker network create pg-net
 
+# step 2 : create named volume for db and cache
+volume: 
+	docker volume create authpgvol
+
+# step 3 : create database container 
 postgres:
 	docker run --name pg13 --network pg-net -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 # docker exec -it mysql mysql -uroot -psecret <name of db>
