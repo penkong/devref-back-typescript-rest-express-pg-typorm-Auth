@@ -25,7 +25,7 @@ apibuilddev:
 	cd server && docker build -t apidev-image-pgauth -f Dockerfile.dev . 
 
 apirundev:
-	docker run -d -p 5002:5002 --name pgauth --network pg-net -v `pwd`/server/node_modules:/node_modules -v `pwd`/server:/ apidev-image-pgauth
+	docker run -d -p 5002:5002 --name pgauth --network pg-net -v `pwd`/server/node_modules:/node_modules -v `pwd`/server/src:/src apidev-image-pgauth
 
 apicleanup:
 	docker stop pgauth && docker rm pgauth && docker rmi apidev-image-pgauth

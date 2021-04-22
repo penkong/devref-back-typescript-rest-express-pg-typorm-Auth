@@ -62,3 +62,7 @@ CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main
 # Add VOLUMEs to allow backup of config, logs and databases
 # https://stackoverflow.com/questions/41935435/understanding-volume-instruction-in-dockerfile
 # VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+
+
+# https://severalnines.com/database-blog/deploying-postgresql-docker-container
+# https://github.com/sameersbn/docker-postgresql#creating-a-backup
