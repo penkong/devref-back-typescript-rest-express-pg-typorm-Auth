@@ -84,7 +84,71 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: penkong/devref-back-typescript-rest-express-pg-typorm-auth
+          image: penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.3
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: dev
+
+            - name: DB
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: dbdriver
+
+            - name: DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: dbname
+
+            - name: DBDOCKER
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: dbdocker
+
+            - name: DB_URL
+              value: hfsdfdsf
+
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: dbpg-sec
+                  key: rootPgUser
+
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dbpg-sec
+                  key: rootPgPass
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: apiport
+
+            - name: CORS
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: cors
+
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dbpg-sec
+                  key: jwtkey
+
+            - name: JWT_TTL
+              valueFrom:
+                secretKeyRef:
+                  name: dbpg-sec
+                  key: jwtttl
+
           resources:
             limits:
               memory: '128Mi'
@@ -98,7 +162,8 @@ metadata:
   name: auth-api-srv
 spec:
   selector:
-    app: myapp
+    app: auth-api
   ports:
-    - port: <Port>
-      targetPort: <Target Port>
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002

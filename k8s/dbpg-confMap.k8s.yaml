@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dbpg-confmap
+data:
+  dbdriver: postgres
+  dbname: devrefauth
+  # dbdocker = host = dbpgurl
+  dbdocker: dbpg-srv
+  pgport: '5432'
+  apiport: '5002'
+  dev: development
+  prod: production
+  cors: http://localhost:3000
+  pgadminemail: nazemi.works@gmail.com

@@ -8,4 +8,6 @@ data:
   rootPgUser: cm9vdA==
   rootPgPass: c2VjcmV0
   pgAdminPass: c2VjcmV0
+  jwtttl: MzY1ZA==
+  jwtkey: and0a2V5
 # k apply -f name

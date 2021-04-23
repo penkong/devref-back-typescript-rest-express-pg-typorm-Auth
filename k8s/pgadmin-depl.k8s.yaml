@@ -5,6 +5,7 @@ metadata:
   labels:
     app: pgadmin
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: pgadmin
@@ -15,15 +16,20 @@ spec:
     spec:
       containers:
         - name: pgadmin
-          image: 'dpage/pgadmin4'
+          image: dpage/pgadmin4
           env:
             - name: PGADMIN_DEFAULT_EMAIL
-              value: 'nazemi.works@gmail.com'
+              valueFrom:
+                configMapKeyRef:
+                  name: dbpg-confmap
+                  key: pgadminemail
+
             - name: PGADMIN_DEFAULT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: dbpg-sec
                   key: pgAdminPass
+
           resources:
             limits:
               memory: '128Mi'
@@ -31,14 +37,17 @@ spec:
           ports:
             - containerPort: 80
 ---
+# minikube service pgadmin-srv
 apiVersion: v1
 kind: Service
 metadata:
   name: pgadmin-srv
 spec:
+  type: LoadBalancer
   selector:
     app: pgadmin
   ports:
     - protocol: TCP
       port: 8001
       targetPort: 80
+      nodePort: 31888

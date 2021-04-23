@@ -47,10 +47,9 @@ migrateup:
 
 
 buildprodimage:
-	cd server && docker build -t penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.2 .
+	cd server && docker build -t penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.3 .
 
 #  need login to docker hub in terminal before this step
 pushimage:
-	docker push penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.2
-
+	docker push penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.3
 # docker exec -it mysql mysql -uroot -psecret <name of db>
