@@ -44,6 +44,7 @@
 # kubectl get pod -o wide
 # kubectl get deployment name -o yaml $$$$$$$$$$$$$$$$$$$$$$$$$$$$
 # k get all | grep <name>
+# minikube docker-env
 
 # with file
 # kubectl apply -f filename
@@ -61,10 +62,10 @@
 #
 #
 #
-#
-#
-#
-#
+# Namspaces : orgize resources in namespaces
+#   virtual cluster inside a cluster
+#   there are 4 namespaces by default
+#   k get namespace
 #
 
 apiVersion: apps/v1
@@ -74,6 +75,7 @@ metadata:
   labels:
     app: auth-api
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: auth-api
@@ -84,27 +86,31 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: penkong/devref-back-typescript-rest-express-pg-typeorm-auth:0.0.3
+          image: penkong/starters:0.0.1
           env:
             - name: NODE_ENV
+              # value: development
               valueFrom:
                 configMapKeyRef:
                   name: dbpg-confmap
                   key: dev
 
             - name: DB
+              # value: postgres
               valueFrom:
                 configMapKeyRef:
                   name: dbpg-confmap
                   key: dbdriver
 
             - name: DBNAME
+              # value: devrefauth
               valueFrom:
                 configMapKeyRef:
                   name: dbpg-confmap
                   key: dbname
 
-            - name: DBDOCKER
+            - name: DB_DOCKER
+              # value: dbpg-srv
               valueFrom:
                 configMapKeyRef:
                   name: dbpg-confmap
@@ -114,40 +120,45 @@ spec:
               value: hfsdfdsf
 
             - name: PGUSER
+              # value: root
               valueFrom:
                 secretKeyRef:
                   name: dbpg-sec
                   key: rootPgUser
 
             - name: PASSWORD
+              # value: secret
               valueFrom:
                 secretKeyRef:
                   name: dbpg-sec
                   key: rootPgPass
 
             - name: PORT
+              # value: '5002'
               valueFrom:
                 configMapKeyRef:
                   name: dbpg-confmap
                   key: apiport
 
             - name: CORS
+              # value: fdsfdsfds
               valueFrom:
                 configMapKeyRef:
                   name: dbpg-confmap
                   key: cors
 
             - name: JWT_KEY
+              # value: dsfsdfsdfsdfsdf
               valueFrom:
                 secretKeyRef:
                   name: dbpg-sec
                   key: jwtkey
-
             - name: JWT_TTL
-              valueFrom:
-                secretKeyRef:
-                  name: dbpg-sec
-                  key: jwtttl
+              value: 365d
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: dbpg-sec
+              #     key: jwtttl
 
           resources:
             limits:
@@ -161,9 +172,11 @@ kind: Service
 metadata:
   name: auth-api-srv
 spec:
+  type: LoadBalancer
   selector:
     app: auth-api
   ports:
     - protocol: TCP
       port: 5002
       targetPort: 5002
+      nodePort: 31887

@@ -2,11 +2,11 @@ import { ConnectionOptions } from 'typeorm/connection/ConnectionOptions'
 
 import { config } from './index'
 
-const { DB_DOCKER, PGUSER, PASSWORD, DBNAME, __prod__ } = config
+const { /* PGUSER,*/ DB_DOCKER, PGUSER, PASSWORD, DBNAME, __prod__ } = config
 
 export const TYPEORM: ConnectionOptions = {
   type: 'postgres',
-  host: DB_DOCKER || 'localhost',
+  host: DB_DOCKER || '172.18.0.2',
   port: 5432,
   username: PGUSER || 'root',
   password: PASSWORD || 'secret',
