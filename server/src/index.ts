@@ -3,9 +3,6 @@
  */
 
 import 'reflect-metadata'
-import dotenv from 'dotenv'
-
-dotenv.config({ path: './config/index.ts' })
 
 // import { Server } from 'http'
 import { createConnection } from 'typeorm'
