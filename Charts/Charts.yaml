@@ -3,7 +3,7 @@ name: climate-electric-reader
 description: Climate Electric Reader Helm Chart
 version: 0.1.0
 sources:
-  - https://github.com/allinfra-ltd/climate-electric-reader/
+  - https://github.com/
 mainteiners:
-  - name: Leonard Mocanu
-    email: leo@allinfra.com
+  - name:
+    email:
