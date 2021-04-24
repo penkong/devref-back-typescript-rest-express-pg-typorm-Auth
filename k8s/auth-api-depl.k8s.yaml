@@ -107,12 +107,15 @@
 #
 #
 #
-#
-#
-#
-#
-#
-#
+#   Helm :
+#   what is helm ? package manager , to package yaml files
+#   consider want add elastik
+#   you create Helm charts , bundle of yaml files , bootstraper of functionality
+#   create helm chart with helm , databases have helm chart available
+#   helm search <keyword > or helm hub or helm charts
+#   also helm is templating engine , consider microservices that are same only app name and version are
+#   different , define a commin blueprint and it gave us syntsx {{ .Values.name }} and it come from values.yaml for ex
+#   useful with ci/cd and same app across different env or Nodes use your own charts for different env
 #
 #
 #
