@@ -1,0 +1,30 @@
+# apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  labels:
+    name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/default-backend: 'true'
+spec:
+  # defaultBackend:
+  # resource:
+  # apiGroup: k8s.example.com
+  # kind: StorageBucket
+  # name: static-assets
+  rules:
+    # map with /etc/hosts
+    - host: dnspurian.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: /api/v1/auth
+            backend:
+              service:
+                name: auth-api-srv
+                port:
+                  number: 5003

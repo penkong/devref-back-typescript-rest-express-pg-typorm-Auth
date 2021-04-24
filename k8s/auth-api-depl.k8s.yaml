@@ -66,6 +66,55 @@
 #   virtual cluster inside a cluster
 #   there are 4 namespaces by default
 #   k get namespace
+#   k-dashboard is for minikube only
+#   k-system not for your use (system process , managing process)
+#   k-public publicely accssible data , a configmap , which contains cluster info
+#      k cluster-info
+#   k-node-lease contain heartbeat of nodes , each node has associated lease Object in namespace
+#   k-default , if you don't define one all your things containers add in this
+# can create namespace from termina and config map
+# use namespaceing for isolation , sepration , database namespace , monitor namespac , elastic .
+#  nginx-ingress namespace or for each env , staging , development and ... or 2 production version
+#  also use for limit resources / env
+#  each namespace must define own ConfigMap and other namespace cant use other namespace configMap
+#  service can be shared accross namespaces
+#  use database service from namespace database in configmap of controllers it become db_url:mysqlService.databaseNamespace
+
+#  volume and Node are global access in cluster
+#  k api-resources --namespaced=false
+
+#  k get configmap -n default
+#  k apply -f file.k8s.yaml --namespace=specific or add to config
+
+# kubens for namespace
+#  https://github.com/ahmetb/kubectx/releases
+#  Install kubectx (Switch between Kubernetes contexts/namespaces)
+#  sudo curl -sSL http://github.com/ahmetb/kubectx/archive/v0.3.1.tar.gz | tar -C /usr/local/ -xz
+#  export PATH=/usr/local/kubectx-0.3.1:$PATH
+
+# ----------------
+
+#  Ingress
+#  ingress controller pod >> (browser)ingress(routing) >> app serivce >> app pod
+#
+#   make ingress config , then need ingres controller pod to add and install
+#   ingress controller manage and redirects , entry point to cluster
+#   minikube addons enable ingress
+#   k get pod -n kube-system , k describe deploy ingress-nginx-controller -n kube-system
+#   map with /etc/hosts
+#
+#   minikube addons enable ingress --alsologtostderr
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 
 apiVersion: apps/v1
@@ -175,11 +224,11 @@ kind: Service
 metadata:
   name: auth-api-srv
 spec:
-  type: LoadBalancer
+  # type: LoadBalancer
   selector:
     app: auth-api
   ports:
     - protocol: TCP
       port: 5003
       targetPort: 5003
-      nodePort: 31887
+      # nodePort: 31887
