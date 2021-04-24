@@ -86,7 +86,8 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: penkong/starters:0.0.1
+          image: 'penkong/starter2:latest'
+          imagePullPolicy: Always
           env:
             - name: NODE_ENV
               # value: development
@@ -153,19 +154,21 @@ spec:
                 secretKeyRef:
                   name: dbpg-sec
                   key: jwtkey
+
             - name: JWT_TTL
-              value: 365d
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: dbpg-sec
-              #     key: jwtttl
+              # value: 365d
+              valueFrom:
+                secretKeyRef:
+                  name: dbpg-sec
+                  key: jwtttl
 
           resources:
             limits:
-              memory: '128Mi'
+              memory: '256Mi'
               cpu: '500m'
           ports:
             - containerPort: 5002
+
 ---
 apiVersion: v1
 kind: Service

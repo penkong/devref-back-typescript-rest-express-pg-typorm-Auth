@@ -33,7 +33,7 @@ spec:
               value: '5432'
           resources:
             limits:
-              memory: '128Mi'
+              memory: '256Mi'
               cpu: '500m'
           ports:
             - containerPort: 5432

@@ -4,6 +4,7 @@
 
 import 'reflect-metadata'
 import dotenv from 'dotenv'
+
 dotenv.config({ path: './config/index.ts' })
 
 // import { Server } from 'http'
@@ -19,6 +20,8 @@ import { TYPEORM } from './config/connection.config'
 // ---
 
 const { PORT } = config
+
+console.log(config)
 
 // ---
 
@@ -38,7 +41,7 @@ createConnection(TYPEORM)
   .then(() => {
     console.log(TYPEORM)
     console.log(PORT)
-    app.listen(parseInt(PORT), () => {
+    app.listen(parseInt(PORT!), () => {
       console.log(`Listening on ${PORT}!`)
     })
   })
