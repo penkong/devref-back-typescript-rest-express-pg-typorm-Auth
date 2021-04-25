@@ -4,7 +4,11 @@ dockerNetwork:
 
 # step 2 : create named volume for db and cache
 volume: 
-	docker volume create pgvol
+	docker volume create mongovol & docker volume create portainer_data
+
+portainer:
+	docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
 
 # step 3 : create database container 
 postgres:

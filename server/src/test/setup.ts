@@ -31,10 +31,10 @@ beforeAll(async () => {
 // })
 
 // we use
-jest.mock('../utils', () => {
-  return {
-    getWinner: jest.fn(() => {})
-  }
-})
+// jest.mock('../utils', () => {
+//   return {
+//     getWinner: jest.fn(() => {})
+//   }
+// })
 
 //  utils.getWinner.mockReset()
