@@ -4,11 +4,9 @@ import hpp from 'hpp'
 import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
-import express from 'express'
-import cookieSession from 'cookie-session'
 import compression from 'compression'
-
-import { json, urlencoded } from 'body-parser'
+import cookieSession from 'cookie-session'
+import express, { json, urlencoded } from 'express'
 
 // ---
 
@@ -26,10 +24,10 @@ const app = express()
 
 app.set('trust proxy', true)
 app.use(
-	cors({
-		origin: CORS,
-		credentials: true
-	})
+  cors({
+    origin: CORS,
+    credentials: true
+  })
 )
 app.use(helmet())
 
@@ -41,18 +39,18 @@ app.use(json({ limit: '2kb' }))
 app.use(urlencoded({ extended: true, limit: '2kb' }))
 
 app.use(
-	cookieSession({
-		name: 'session',
-		sameSite: 'none',
-		signed: false,
-		secure: false
-	})
+  cookieSession({
+    name: 'session',
+    sameSite: 'none',
+    signed: false,
+    secure: false
+  })
 )
 
 app.use(
-	hpp({
-		whitelist: []
-	})
+  hpp({
+    whitelist: []
+  })
 )
 
 app.use(compression())
@@ -62,8 +60,8 @@ app.use(compression())
 app.use('/api/v1/auth', authRouter)
 
 app.all('*', async (_req, _res, next) => {
-	// throw new NotFoundErr()
-	next(new NotFoundErr())
+  // throw new NotFoundErr()
+  next(new NotFoundErr())
 })
 
 // end -----

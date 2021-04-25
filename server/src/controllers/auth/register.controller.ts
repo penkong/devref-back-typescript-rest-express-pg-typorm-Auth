@@ -18,35 +18,35 @@ const { JWT_KEY } = config
 // ---
 
 export const register = catchAsync(
-  async (req: Request, res: Response, _next: NextFunction) => {
-    //
+	async (req: Request, res: Response, _next: NextFunction) => {
+		//
 
-    const { email, password } = req.body
+		const { email, password } = req.body
 
-    const existingUser = await UserRepository.getByEmail(email)
+		const existingUser = await UserRepository.getByEmail(email)
 
-    if (existingUser) {
-      throw new BadReqErr('Email in use')
-    }
+		if (existingUser) {
+			throw new BadReqErr('Email in use')
+		}
 
-    const hashed = await PasswordService.toHash(password)
+		const hashed = await PasswordService.toHash(password)
 
-    const user = await UserRepository.create({ email, password: hashed })
+		const user = await UserRepository.create({ email, password: hashed })
 
-    // Generate JWT
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email
-      },
-      JWT_KEY!
-    )
+		// Generate JWT
+		const userJwt = jwt.sign(
+			{
+				id: user.id,
+				email: user.email
+			},
+			JWT_KEY!
+		)
 
-    // Store it on session object
-    req.session = {
-      jwt: userJwt
-    }
+		// Store it on session object
+		req.session = {
+			jwt: userJwt
+		}
 
-    res.status(201).send([userRefine(user, userJwt)])
-  }
+		res.status(201).send([userRefine(user, userJwt)])
+	}
 )

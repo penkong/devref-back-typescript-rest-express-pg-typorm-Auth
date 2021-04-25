@@ -3,9 +3,10 @@
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "eslint:recommended",
+    // "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 2020,
@@ -13,9 +14,9 @@
     "ecmaFeatures": {}
   },
   "rules": {
-    "strict": ["error", "never"]
+    "strict": ["error", "never"],
+    "@typescript-eslint/no-var-requires": 0
     // "valid-typeof": "warn", // error
-    // "@typescript-eslint/no-var-requires": 0,
     // "no-console": 0,
     // "no-unused-vars": "error",
     // "no-unsafe-negation": "error",

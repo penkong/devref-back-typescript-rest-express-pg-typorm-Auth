@@ -19,6 +19,8 @@ COPY . .
 FROM base as builder
 
 EXPOSE 5002
+RUN rm -rf node_modules
+RUN npm install --production
 
 ENV NODE_ENV=production
 

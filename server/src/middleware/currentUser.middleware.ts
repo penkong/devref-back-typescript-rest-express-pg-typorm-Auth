@@ -8,27 +8,31 @@ import { config } from '../config'
 const { JWT_KEY } = config
 
 declare global {
-	namespace Express {
-		interface Request {
-			currentUser?: object
-		}
-	}
+  // @eslint-ignore
+  namespace Express {
+    interface Request {
+      currentUser?: { [key: string]: any }
+    }
+  }
 }
 
 // ---
 
 export const currentUser = (
-	req: Request,
-	_res: Response,
-	next: NextFunction
+  req: Request,
+  _res: Response,
+  next: NextFunction
 ) => {
-	//
-	if (!req.session?.jwt) return next()
+  //
+  if (!req.session?.jwt) return next()
 
-	try {
-		const payload = jwt.verify(req.session.jwt, JWT_KEY!) as object
-		req.currentUser = payload
-	} catch (err) {}
+  try {
+    const payload = jwt.verify(req.session.jwt, JWT_KEY!) as {
+      [key: string]: any
+    }
+    req.currentUser = payload
+  } catch (err) {}
 
-	next()
+  next()
+  // return next()
 }
