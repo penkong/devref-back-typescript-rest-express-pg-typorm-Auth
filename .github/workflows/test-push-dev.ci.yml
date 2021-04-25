@@ -1,0 +1,22 @@
+name: test-push-dev-ci
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  TestPushDev:
+    name: TestPushDev
+    runs-on: ubuntu-latest
+
+    steps:
+      # it brings source code in you active directory.
+      - uses: actions/checkout@v2
+      # setup node action
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      # npm i clean mode
+      - run: npm ci
+      - run: npm test
