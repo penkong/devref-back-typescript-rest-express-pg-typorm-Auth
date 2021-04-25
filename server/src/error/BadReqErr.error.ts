@@ -7,15 +7,15 @@ import { BaseErr } from './BaseErr.error'
 // ---
 
 export class BadReqErr extends BaseErr {
-  statusCode = 400
+	statusCode = 400
 
-  constructor(public message: string) {
-    super(message || 'bad request')
+	constructor(public message: string) {
+		super(message || 'bad request')
 
-    Object.setPrototypeOf(this, BadReqErr.prototype)
-  }
+		Object.setPrototypeOf(this, BadReqErr.prototype)
+	}
 
-  serializeErrors() {
-    return [{ message: this.message }]
-  }
+	serializeErrors() {
+		return [{ message: this.message }]
+	}
 }

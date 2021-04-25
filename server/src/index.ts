@@ -35,18 +35,18 @@ console.log(config)
 // if (!DB_URL) throw new Error('database url must be defined!')
 
 createConnection(TYPEORM)
-  .then(() => {
-    console.log(TYPEORM)
-    console.log(PORT)
-    app.listen(parseInt(PORT!), () => {
-      console.log(`Listening on ${PORT}!`)
-    })
-  })
-  .catch(err => {
-    console.log(PORT)
-    console.log(err)
-    console.log(TYPEORM)
-  })
+	.then(() => {
+		console.log(TYPEORM)
+		console.log(PORT)
+		app.listen(parseInt(PORT!), () => {
+			console.log(`Listening on ${PORT}!`)
+		})
+	})
+	.catch(err => {
+		console.log(PORT)
+		console.log(err)
+		console.log(TYPEORM)
+	})
 
 // process.on('unhandledRejection', err => {
 //   console.log('UNHANDLED REJECTION! 💥 Shutting down...')

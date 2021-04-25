@@ -26,10 +26,10 @@ const app = express()
 
 app.set('trust proxy', true)
 app.use(
-  cors({
-    origin: CORS,
-    credentials: true
-  })
+	cors({
+		origin: CORS,
+		credentials: true
+	})
 )
 app.use(helmet())
 
@@ -41,18 +41,18 @@ app.use(json({ limit: '2kb' }))
 app.use(urlencoded({ extended: true, limit: '2kb' }))
 
 app.use(
-  cookieSession({
-    name: 'session',
-    sameSite: 'none',
-    signed: false,
-    secure: false
-  })
+	cookieSession({
+		name: 'session',
+		sameSite: 'none',
+		signed: false,
+		secure: false
+	})
 )
 
 app.use(
-  hpp({
-    whitelist: []
-  })
+	hpp({
+		whitelist: []
+	})
 )
 
 app.use(compression())
@@ -62,8 +62,8 @@ app.use(compression())
 app.use('/api/v1/auth', authRouter)
 
 app.all('*', async (_req, _res, next) => {
-  // throw new NotFoundErr()
-  next(new NotFoundErr())
+	// throw new NotFoundErr()
+	next(new NotFoundErr())
 })
 
 // end -----

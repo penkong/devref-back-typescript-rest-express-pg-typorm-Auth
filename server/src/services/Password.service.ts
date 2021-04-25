@@ -12,19 +12,19 @@ const scryptAsync = promisify(scrypt)
 // ---
 
 export class PasswordService {
-  //
+	//
 
-  static async toHash(password: string) {
-    const salt = randomBytes(12).toString('hex')
-    const buf = (await scryptAsync(password, salt, 64)) as Buffer
+	static async toHash(password: string) {
+		const salt = randomBytes(12).toString('hex')
+		const buf = (await scryptAsync(password, salt, 64)) as Buffer
 
-    return `${buf.toString('hex')}.${salt}`
-  }
+		return `${buf.toString('hex')}.${salt}`
+	}
 
-  static async compare(storedPass: string, password: string) {
-    const [hashedPassword, salt] = storedPass.split('.')
-    const buf = (await scryptAsync(password, salt, 64)) as Buffer
+	static async compare(storedPass: string, password: string) {
+		const [hashedPassword, salt] = storedPass.split('.')
+		const buf = (await scryptAsync(password, salt, 64)) as Buffer
 
-    return buf.toString('hex') === hashedPassword
-  }
+		return buf.toString('hex') === hashedPassword
+	}
 }

@@ -9,11 +9,12 @@ import { catchAsync } from '../../util'
 // ---
 
 export const logout = catchAsync(
-  async (req: Request, res: Response, _next: NextFunction) => {
-    //
+	async (req: Request, res: Response, _next: NextFunction) => {
+		//
 
-    req.currentUser = {}
-    req.session!.jwt = null
-    res.send({})
-  }
+		req.currentUser = {}
+
+		req.session && (req.session.jwt = null)
+		res.send({})
+	}
 )

@@ -10,15 +10,15 @@ import { ValidationRequestErr } from '../error'
 // ---
 
 export const validateReq = (
-  req: Request,
-  _res: Response,
-  next: NextFunction
+	req: Request,
+	_res: Response,
+	next: NextFunction
 ) => {
-  //
+	//
 
-  const errors = validationResult(req)
+	const errors = validationResult(req)
 
-  if (!errors.isEmpty()) throw new ValidationRequestErr(errors.array())
+	if (!errors.isEmpty()) throw new ValidationRequestErr(errors.array())
 
-  next()
+	next()
 }
