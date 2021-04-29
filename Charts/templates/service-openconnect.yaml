@@ -1,0 +1,21 @@
+{{- if .Values.openconnect.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.app.component }}-openconnect
+  labels:
+    app: {{ .Values.app.name }}
+    component: {{ .Values.app.component }}
+    environment: {{ .Values.environment }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: forwarded
+      port: {{ .Values.openconnect.port }}
+      targetPort: {{ .Values.openconnect.port }}
+      protocol: TCP
+  selector:
+    app: {{ .Values.app.name }}
+    component: {{ .Values.app.component }}
+    environment: {{ .Values.environment }}
+{{- end }}

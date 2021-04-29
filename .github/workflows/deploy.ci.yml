@@ -1,0 +1,27 @@
+name: deploy-cd-here
+
+on:
+  # release
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # it brings source code in you active directory.
+      - uses: actions/checkout@v2
+      # setup node action
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      # npm i clean mode
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      # ${{ secrets.NAMEOFYOUR TOKEN }}
+  # builder :
+  # needs: deploy

@@ -1,0 +1,15 @@
+{{- if .Values.openconnect.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.app.component }}-openconnect
+  labels:
+    app: {{ .Values.app.name }}
+    component: {{ .Values.app.component }}
+    environment: {{ .Values.environment }}
+data:
+  GROUP: {{ .Values.openconnect.group | quote }}
+  OPTIONS: {{ .Values.openconnect.options | quote }}
+  INTERNAL_IP: {{ .Values.openconnect.internalIp | quote }}
+  PORT: {{ .Values.openconnect.port | quote }}
+{{- end }}

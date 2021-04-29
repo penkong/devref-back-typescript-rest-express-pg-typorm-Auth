@@ -1,0 +1,69 @@
+# github action is ci service
+# each step is chunck of reuse code named action
+name: test-pull-request-ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  TestPull:
+    name: TestPull
+    runs-on: ubuntu-latest
+
+    steps:
+      # it brings source code in you active directory.
+      - uses: actions/checkout@v2
+      # setup node action
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      # npm i clean mode
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     # Label used to access the service container
+  #     postgres:
+  #       # Docker Hub image
+  #       image: postgres:13
+  #       # Provide the password for postgres
+  #       env:
+  #         POSTGRES_USER: root
+  #         POSTGRES_PASSWORD: secret
+  #         POSTGRES_DB: authservice
+  #       # Set health checks to wait until postgres has started
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       ports:
+  #         - 5432:5432
+  #   steps:
+  #     - name: checkout code into the go module
+  #       uses: actions/checkout@v2
+  #       id: checkout
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v2
+  #       with:
+  #         go-version: 1.16
+  #       # id: setup_go
+  #     - name: Set up Golang Migrate
+  #       run: |
+  #         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz
+  #         sudo mv migrate.linux-amd64 /usr/bin/migrate
+  #         which migrate
+  #     - name: Migrate
+  #       run: make migrateup
+  #       # id: Migration
+  #     - name: Test
+  #       run: make test
+  #       # id: Test
+  #     # - name: Build
+  #     #   run: go build -v ./...
+  #     #   id: Build
