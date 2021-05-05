@@ -37,3 +37,5 @@ ENV NODE_ENV=production
 USER node
 
 CMD ["npm", "run", "build"]
+# https://medium.com/@ankit.wal/the-why-and-how-of-multi-stage-docker-build-with-typescript-example-bcadbce2686c
+# https://stackoverflow.com/questions/59682961/asked-to-install-typescript-when-already-installed-when-building-docker-image

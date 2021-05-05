@@ -118,8 +118,31 @@
 #   useful with ci/cd and same app across different env or Nodes use your own charts for different env
 #
 #
+#   Persistant volume , persistant volume claim , storage class
 #
+#   pv  s are cluster resources like ram and cpu
+#   create with yaml file kind: PersistanVolume
+#   pv is abstract component and need real storage on physical .
+#   you need to know what type of storage you need
+#   storage are external plugin in kuber cluster
+#
+#   pv are not namespaced they can access by whole cluster
+#   developer --> pod --> pvc (we claim for that remote pv) --> pv
+#   pvc are namespaced
+#   develpers pvc , admins pv
+#   also we have 2 volume type config map and secret (not created by pv or pvc)
 
+#   on real world need a lot pv , admin
+#   storage class provisions  pv dynamically (abstract underlying storage provider)
+
+#  stateful set , for statful application like sql and ...
+#  stateless deployed using Deployment
+#  stateful deployed using StatefulSet
+#  in stateful replica pods are not identical pod identity
+#  master pod and slave pod , master read write , slvae rad  also each one has it's own storage
+#  those storeage sync togehter
+
+# https://gitlab.com/gitlab-org/kubernetes-gitlab-demo/-/tree/master/gitlab
 apiVersion: apps/v1
 kind: Deployment
 metadata:

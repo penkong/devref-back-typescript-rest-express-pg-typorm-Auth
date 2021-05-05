@@ -43,9 +43,12 @@ kind: Service
 metadata:
   name: dbpg-srv
 spec:
+type: ClusterIP
+  # headeles clusterIP: none
   selector:
     app: dbpg
   ports:
+    # if it is multi port must name it
     - protocol: TCP
       port: 5432
       targetPort: 5432
