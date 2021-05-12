@@ -1,0 +1,61 @@
+FROM node:15.13.0-alpine
+
+
+
+
+
+ENV NODE_ENV=development
+
+ENV DB=postgres
+ENV DBNAME=devrefauth
+
+# if you dont use docker-compose change it to localhost
+ENV DB_DOCKER=pg
+
+ENV PGUSER=root
+ENV PASSWORD=secret
+ENV DB_URL=postgresql://root:<PASSWORD>@localhost:5432/expresstypormpg?sslmode=disable
+ENV PORT=5002
+ENV CORS=http://localhost:3000
+ENV JWT_KEY=yhgewy5ehuyrhbe56y65465hyy547u456t34y57uy45ytewth654uy45wy
+ENV JWT_TTL=365d
+
+
+
+
+
+RUN mkdir -p /app
+WORKDIR "/app"
+
+COPY package*.json ./
+
+
+
+RUN npm config set unsafe-perm true
+# we use npm ci here so only the package-lock.json file is used
+RUN npm config list \
+    && npm ci \
+    && npm cache clean --force
+
+
+
+
+
+COPY . .
+EXPOSE 5002
+
+CMD ["npm", "run", "dev"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+

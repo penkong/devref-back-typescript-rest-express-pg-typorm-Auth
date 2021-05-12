@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+
+nginx:
+  stdin_open: true
+
+portainer:
+  stdin_open: true
+
+redis:
+  stdin_open: true
+  environment:
+    - ALLOW_EMPTY_PASSWORD=yes
+
+pg:
+  restart: always
+  stdin_open: true
+  environment:
+    # - POSTGRES_HOST_AUTH_METHOD=trust
+    - POSTGRES_USER=${}
+    - POSTGRES_PASSWORD=${}
+    - PGPORT=${}
+
+pgadmin:
+  stdin_open: true
+  environment: 
+    - PGADMIN_DEFAULT_EMAIL=${}
+    - PGADMIN_DEFAULT_PASSWORD=${}
+  # ports: 
+  #   - 8005:80
+
+apiauth:
+  image: penkong/expresstypeormpg
+  environment:
+    - PORT=${}
+    - DBURL=${}
+    - DBNAME=vanillanodepg
+    - NODE_ENV=production
+    - PGPASS=${}
+    - PGUSER=${}
+    - CORS=http://${}:3000
+    - JWT_KEY=${}
+    - JWT_TTL=${}
+  ports: 
+    - ${}:${}

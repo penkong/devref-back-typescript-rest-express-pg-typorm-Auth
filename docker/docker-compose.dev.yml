@@ -1,0 +1,52 @@
+version: '3.4'
+services:
+
+  nginx:
+    stdin_open: true
+
+  portainer:
+    stdin_open: true
+
+  redis:
+    stdin_open: true
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  pg:
+    restart: always
+    stdin_open: true
+    environment:
+      # - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - PGPORT=5432
+    # ports: 
+    #   - 5432:5432
+
+  pgadmin:
+    stdin_open: true
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=nazemi.works@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=secret
+    # ports: 
+    #   - 8005:80
+
+  apiauth:
+    build: 
+      dockerfile: Dockerfile.dev
+    stdin_open: true
+    volumes: 
+      - /app/node_modules 
+      - ../app/services/auth:/app
+    environment:
+      - PORT=5002
+      - DBURL=pg
+      - DBNAME=expresstypormpg
+      - NODE_ENV=development
+      - PGPASS=secret
+      - PGUSER=root
+      - CORS=http://localhost:3000
+      - JWT_KEY=yhgewy5ehuyrhbe56y
+      - JWT_TTL=365d
+    ports: 
+      - 5002:5002
