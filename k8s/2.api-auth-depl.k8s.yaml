@@ -146,95 +146,79 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-api-depl
+  name: api-auth-depl
   labels:
-    app: auth-api
+    app: api-auth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-api
+      app: api-auth
   template:
     metadata:
       labels:
-        app: auth-api
+        app: api-auth
     spec:
       containers:
-        - name: auth-api
-          image: 'penkong/starter2:latest'
+        - name: api-auth
+          # eval $(minikube docker-env)
+          # cd to service && docker build -t penkong/vanillanodemongo .
+          image: 'penkong/vanillanodepg:latest'
+          # imagePullPolicy: Never // if use local image
           imagePullPolicy: Always
           env:
-            - name: NODE_ENV
-              # value: development
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: dbpg-confmap
-                  key: dev
+                  name: confmap
+                  key: port
 
-            - name: DB
-              # value: postgres
+            - name: DBURL
               valueFrom:
                 configMapKeyRef:
-                  name: dbpg-confmap
-                  key: dbdriver
+                  name: confmap
+                  key: dburl
 
             - name: DBNAME
-              # value: devrefauth
               valueFrom:
                 configMapKeyRef:
-                  name: dbpg-confmap
+                  name: confmap
                   key: dbname
 
-            - name: DB_DOCKER
-              # value: dbpg-srv
+            - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: dbpg-confmap
-                  key: dbdocker
+                  name: confmap
+                  key: envnode
 
-            - name: DB_URL
-              value: hfsdfdsf
+            - name: PGPASS
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: pgpass
 
             - name: PGUSER
-              # value: root
               valueFrom:
                 secretKeyRef:
-                  name: dbpg-sec
-                  key: rootPgUser
+                  name: secrets
+                  key: pguser
 
-            - name: PASSWORD
-              # value: secret
-              valueFrom:
-                secretKeyRef:
-                  name: dbpg-sec
-                  key: rootPgPass
-
-            - name: PORT
-              value: '5003'
-
-              # valueFrom:
-              #   configMapKeyRef:
-              #     name: dbpg-confmap
-              #     key: apiport
             - name: CORS
-              # value: fdsfdsfds
               valueFrom:
                 configMapKeyRef:
-                  name: dbpg-confmap
+                  name: confmap
                   key: cors
 
             - name: JWT_KEY
-              # value: dsfsdfsdfsdfsdf
               valueFrom:
                 secretKeyRef:
-                  name: dbpg-sec
+                  name: secrets
                   key: jwtkey
 
             - name: JWT_TTL
-              # value: 365d
               valueFrom:
                 secretKeyRef:
-                  name: dbpg-sec
+                  name: secrets
                   key: jwtttl
 
           resources:
@@ -248,13 +232,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-api-srv
+  name: api-auth-srv
 spec:
-  # type: LoadBalancer
   selector:
-    app: auth-api
+    app: api-auth
   ports:
     - protocol: TCP
       port: 5003
       targetPort: 5003
-      # nodePort: 31887

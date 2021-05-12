@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: confmap
+  namespace: default
+data:
+  port: '5003'
+  dburl: pg-srv
+  dbname: vanillanodepg
+  envnode: development
+  cors: http://localhost:3000
+  pgadminemail: nazemi.works@gmail.com
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: dbpg-confmap
+#   # namespace : new-namespace
+# data:
+#   dbdriver: postgres
+#   dbname: devrefauth
+#   # dbdocker = host = dbpgurl
+#   dbdocker: dbpg-srv
+#   pgport: '5432'
+#   apiport: '5002'
+#   dev: development
+#   prod: production
+#   cors: http://localhost:3000
+# pgadminemail: nazemi.works@gmail.com

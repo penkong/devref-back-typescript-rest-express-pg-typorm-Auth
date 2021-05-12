@@ -21,14 +21,14 @@ spec:
             - name: PGADMIN_DEFAULT_EMAIL
               valueFrom:
                 configMapKeyRef:
-                  name: dbpg-confmap
+                  name: confmap
                   key: pgadminemail
 
             - name: PGADMIN_DEFAULT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: dbpg-sec
-                  key: pgAdminPass
+                  name: secrets
+                  key: pgadminpass
 
           resources:
             limits:
