@@ -2,7 +2,7 @@
  ** Description :
  */
 
-import { BaseErr } from './'
+import { BaseErr } from '.'
 
 // ---
 
